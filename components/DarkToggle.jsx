@@ -1,25 +1,42 @@
 'use client'
+
 import { useEffect, useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 
 export default function DarkToggle() {
-  const [isDark, setIsDark] = useState(false)
+  const [theme, setTheme] = useState('dark')
 
   useEffect(() => {
-    const root = document.documentElement
-    if (isDark) {
-      root.classList.add('dark')
+    const savedTheme = localStorage.getItem('theme')
+
+    if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark')
+      setTheme('light')
     } else {
-      root.classList.remove('dark')
+      // Default = dark
+      document.documentElement.classList.add('dark')
+      setTheme('dark')
     }
-  }, [isDark])
+  }, [])
+
+  const toggleTheme = () => {
+    if (theme === 'dark') {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+      setTheme('light')
+    } else {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+      setTheme('dark')
+    }
+  }
 
   return (
     <button
-      aria-pressed={isDark}
-      onClick={() => setIsDark(!isDark)}
-      className="p-2 rounded border text-sm"
+      onClick={toggleTheme}
+      className="p-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md hover:scale-105 transition"
     >
-      {isDark ? 'Light' : 'Dark'}
+      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   )
 }

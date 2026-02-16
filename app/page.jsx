@@ -1,4 +1,6 @@
-// app/page.jsx
+'use client'
+import { Github, Linkedin } from 'lucide-react'
+import { motion } from 'framer-motion'
 import ProjectCard from '../components/ProjectCard'
 import ContactForm from '../components/ContactForm'
 
@@ -10,118 +12,180 @@ const projects = [
     tech: 'Python, Flask, NLP, Streamlit, APIs',
     image: '/images/project-1.png',
     github: 'https://github.com/JEETMANISHBOBDE',
-    live: '#'
   },
   {
-    title: 'Medicine AI Chatbot Using API',
+    title: 'RAG PDF Explainer Chatbot',
     description:
-      'Specialized chatbot to fetch and explain medicine-related information via API integration.',
-    tech: 'Python, APIs, NLP',
+      'Retrieval-Augmented Generation chatbot that explains uploaded PDFs intelligently using LangChain.',
+    tech: 'Flask, RAG, LangChain',
     image: '/images/project-2.png',
     github: 'https://github.com/JEETMANISHBOBDE',
-    live: '#'
   },
   {
-    title: 'College Notes & Planner App',
-    description:
-      'Flutter app for notes, tasks, reminders and weekly calendar preview with Firebase integration.',
-    tech: 'Flutter, Firebase Auth, Firestore',
-    image: '/images/project-3.png',
-    github: '#',
-    live: '#'
-  },
-  {
-    title: 'Queue Dodger App',
-    description:
-      'Track real-time queues and book time slots to avoid waiting lines at local services.',
-    tech: 'Kotlin, Flutter, Firebase',
-    image: '/images/project-4.png',
-    github: '#',
-    live: '#'
-  },
-  {
-    title: 'Bluestock IPO Web App',
-    description:
-      'Full-stack IPO management app built with Django and DRF, using PostgreSQL.',
-    tech: 'Django, DRF, PostgreSQL, Bootstrap',
-    image: '/images/project-5.png',
-    github: '#',
-    live: '#'
-  },
-  {
-    title: 'HOTEL_BOOKING (Hotel Booking Website)',
-    description:
-      'PHP-based hotel booking system built using XAMPP and MySQL.',
-    tech: 'PHP, HTML, CSS, MySQL',
-    image: '/images/project-6.png',
-    github: '#',
-    live: '#'
-  },
-  {
-    title: 'Chatbots Using RAG (PDF-based Explainer)',
-    description:
-      'RAG-based chatbot enabling PDF uploads and intelligent explanations using LangChain.',
-    tech: 'RAG, Flask, LangChain',
-    image: '/images/project-7.png',
-    github: '#',
-    live: '#'
-  }
+  title: 'Cancer Cell Classification using Deep Learning',
+  description:
+    'Deep learning model for classifying cancer cells from microscopic images using CNN architecture. Built to assist early detection and improve diagnostic accuracy.',
+  tech: 'Python, TensorFlow, CNN, OpenCV, Deep Learning',
+  image: '/images/cancer-project.png',
+  github: 'https://github.com/JEETMANISHBOBDE',
+  live: null
+}
 ]
 
 export default function Home() {
   return (
-    <section className="space-y-12">
-      {/* Profile */}
-      <header className="grid md:grid-cols-3 gap-6 items-center">
-        <div className="col-span-1 flex justify-center md:justify-start">
-          <img
-            src="/images/profile.jpg"
-            alt="Jeet Manish Bobde"
-            className="w-40 h-40 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-700"
-          />
-        </div>
-        <div className="md:col-span-2">
-          <h1 className="text-4xl font-extrabold">Jeet Manish Bobde</h1>
-          <p className="mt-3 text-slate-600 dark:text-slate-300">AI/ML Developer | CSE Student</p>
-          <p className="mt-4 text-slate-600 dark:text-slate-300">
-            Jeet Bobde is a passionate Computer Science and Engineering student specializing in Artificial Intelligence and Machine Learning. With hands-on experience in building AI-based applications, chatbots, and full-stack web solutions, he enjoys applying machine learning, Python, and modern development frameworks to solve real-world problems. Jeet is continuously learning, experimenting, and creating impactful projects across AI, Flutter, web development, and data-driven systems.
-          </p>
+    <main className="space-y-20">
 
-          <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">India • Available for freelance • Open to new opportunities</p>
-        </div>
-      </header>
+      {/* HERO SECTION */}
+      <section className="text-center space-y-6">
+        <img
+          src="/images/profile.jpg"
+          alt="Jeet Manish Bobde"
+          className="w-40 h-40 mx-auto rounded-full object-cover shadow-lg"
+        />
 
-      {/* Projects */}
-      <section id="projects">
-        <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((p) => (
-            <ProjectCard key={p.title} project={p} />
-          ))}
+        <h1 className="text-4xl md:text-5xl font-bold">
+          Jeet Manish Bobde
+        </h1>
+
+        <p className="text-lg text-slate-600 dark:text-slate-300">
+          AI/ML Developer | Computer Science Student
+        </p>
+
+        <p className="max-w-2xl mx-auto text-slate-600 dark:text-slate-300">
+          Passionate about Artificial Intelligence, Machine Learning,
+          and building real-world applications using modern frameworks.
+          I enjoy developing intelligent systems, chatbots, mobile apps,
+          and full-stack solutions.
+        </p>
+
+        <div className="flex justify-center gap-4">
+            <a
+    href="https://github.com/JEETMANISHBOBDE"
+    target="_blank"
+    className="flex items-center gap-2 px-6 py-2 rounded-xl border border-white/30 backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300"
+  >
+    <Github size={18} />
+    GitHub
+  </a>
+
+  <a
+    href="https://www.linkedin.com/in/jeetmanishbobde/"
+    target="_blank"
+    className="flex items-center gap-2 px-6 py-2 rounded-xl border border-white/30 backdrop-blur-md hover:bg-white hover:text-black transition-all duration-300"
+  >
+    <Linkedin size={18} />
+    LinkedIn
+  </a>
+          <a
+            href="/resume.pdf"
+            download
+            className="px-5 py-2 bg-blue-600 text-white rounded-lg"
+          >
+            Download Resume
+          </a>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact">
-        <h2 className="text-2xl font-semibold mb-4">Contact</h2>
-        <p className="text-slate-600 dark:text-slate-300 mb-4">Want to work together? Send me a message.</p>
+      {/* SKILLS SECTION */}
+      <section className="py-20">
+  <h2 className="text-4xl font-bold text-center mb-16">
+    Skills & Technologies
+  </h2>
 
-        import ContactForm from '../components/ContactForm'
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-/* ... inside Home component ... */
-<section id="contact">
-  <h2 className="text-2xl font-semibold mb-4">Contact</h2>
-  <p className="text-slate-600 dark:text-slate-300 mb-4">Want to work together? Send me a message.</p>
+    {/* Programming */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-blue-400">
+        Programming
+      </h3>
+      <p className="text-slate-300">
+        Python, Java, C++, JavaScript, SQL
+      </p>
+    </div>
 
-  <ContactForm />
+    {/* Web & Backend */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-green-400">
+        Web & Backend
+      </h3>
+      <p className="text-slate-300">
+        Django, FastAPI, Node.js, React.js, REST APIs
+      </p>
+    </div>
 
-  <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-    Alternatively, reach me at <a href="mailto:jmbobde99@gmail.com" className="underline">jmbobde99@gmail.com</a>
-  </p>
+    {/* AI & ML */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-purple-400">
+        AI & Machine Learning
+      </h3>
+      <p className="text-slate-300">
+        TensorFlow, PyTorch, Scikit-learn, RAG, NLP,
+        Computer Vision, YOLOv8
+      </p>
+    </div>
+
+    {/* Generative AI */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-pink-400">
+        Generative AI & LLM Tools
+      </h3>
+      <p className="text-slate-300">
+        LangChain, LlamaIndex, Hugging Face Transformers
+      </p>
+    </div>
+
+    {/* Databases */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-yellow-400">
+        Databases
+      </h3>
+      <p className="text-slate-300">
+        PostgreSQL, MongoDB, Pinecone, Supabase
+      </p>
+    </div>
+
+    {/* Cloud & DevOps */}
+    <div className="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg hover:scale-105 transition">
+      <h3 className="text-xl font-semibold mb-4 text-red-400">
+        Cloud & DevOps
+      </h3>
+      <p className="text-slate-300">
+        Docker, Kubernetes, Firebase, GitHub Actions
+      </p>
+    </div>
+
+  </div>
 </section>
 
-        <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">Alternatively, reach me at <a href="mailto:jmbobde99@gmail.com" className="underline">jmbobde99@gmail.com</a></p>
+      {/* PROJECTS SECTION */}
+     <section className="py-20">
+  <motion.h2
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-4xl font-bold text-center mb-16"
+  >
+    Featured Projects
+  </motion.h2>
+
+  <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    {projects.map((project) => (
+      <ProjectCard key={project.title} project={project} />
+    ))}
+  </div>
+</section>
+
+
+      {/* CONTACT SECTION */}
+      <section>
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          Contact Me
+        </h2>
+
+        <ContactForm />
       </section>
-    </section>
+    </main>
   )
 }
