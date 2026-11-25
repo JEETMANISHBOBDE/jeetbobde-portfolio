@@ -1,22 +1,28 @@
 import './globals.css'
-import DarkToggle from '../components/DarkToggle'
+import Header from '../components/Header'
+import MotionEffects from '../components/MotionEffects'
+
+const description = 'Portfolio of Jeet Manish Bobde, a software developer and computer science student working in applied AI, machine learning, and backend engineering.'
+const themeScript = "try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch{}"
 
 export const metadata = {
-  title: 'Jeet Manish Bobde',
-  description: 'AI/ML Developer Portfolio',
+  title: 'Jeet Manish Bobde | Software Developer & Applied AI',
+  description,
+  openGraph: {
+    title: 'Jeet Manish Bobde | Software Developer & Applied AI',
+    description,
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300">
-
-        <div className="fixed top-5 right-5 z-50">
-          <DarkToggle />
-        </div>
-
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
+      <body>
+        <Header />
         {children}
-
+        <MotionEffects />
       </body>
     </html>
   )

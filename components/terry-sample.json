@@ -1,0 +1,31 @@
+{
+  "title": "Studio services agreement",
+  "filename": "terry-sample-agreement.pdf",
+  "description": "Fictional agreement for designing a printed event program.",
+  "clauses": [
+    {
+      "id": "delivery",
+      "number": "01",
+      "title": "Delivery",
+      "passage": "The studio will deliver the first draft within five business days of receiving the final brief. Print-ready files are due two business days after written approval.",
+      "question": "When are files due?",
+      "answer": "The first draft is due within five business days of receiving the final brief. Print-ready files are due two business days after written approval."
+    },
+    {
+      "id": "revisions",
+      "number": "02",
+      "title": "Revisions",
+      "passage": "The project includes two rounds of revisions. The client will send one consolidated set of comments per round.",
+      "question": "How many revisions are included?",
+      "answer": "Two rounds of revisions are included. The client should send one consolidated set of comments per round."
+    },
+    {
+      "id": "approval",
+      "number": "03",
+      "title": "Approval",
+      "passage": "The client will confirm final approval by email and include the approved version number in the message.",
+      "question": "How is approval confirmed?",
+      "answer": "The client confirms final approval by email and includes the approved version number in the message."
+    }
+  ]
+}

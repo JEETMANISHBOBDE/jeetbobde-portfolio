@@ -1,124 +1,73 @@
 'use client'
+
 import { useState } from 'react'
+import { CheckCircle2, CircleAlert, Send } from 'lucide-react'
+
+const emailFallback = 'I couldn’t send your message. Please try again or use the email link.'
 
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+  async function handleSubmit(event) {
+    event.preventDefault()
+    if (loading) return
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+    const form = event.currentTarget
+    const fields = Object.fromEntries(new FormData(form))
     setLoading(true)
     setStatus(null)
 
     try {
-      const res = await fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(fields),
       })
+      const data = await response.json()
 
-      const data = await res.json()
-
-      if (data.ok) {
-        setStatus({ ok: true, message: 'Message sent — thanks!' })
-        setForm({ name: '', email: '', message: '' })
+      if (response.ok && data.ok) {
+        form.reset()
+        setStatus({ ok: true, message: 'Message sent. Thank you for reaching out.' })
       } else {
-        setStatus({
-          ok: false,
-          message: data.error || 'Failed to send message',
-        })
+        setStatus({ ok: false, message: data.error || emailFallback })
       }
-    } catch (err) {
-      setStatus({ ok: false, message: 'Network error' })
+    } catch {
+      setStatus({ ok: false, message: emailFallback })
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl"
-    >
-      {/* Name */}
-      <input
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        placeholder="Your name"
-        required
-        className="p-3 rounded-lg border
-        bg-white dark:bg-slate-800
-        text-slate-900 dark:text-white
-        border-slate-300 dark:border-slate-600
-        placeholder-slate-400
-        focus:outline-none focus:ring-2 focus:ring-blue-500
-        transition-colors duration-300"
-      />
-
-      {/* Email */}
-      <input
-        name="email"
-        value={form.email}
-        onChange={handleChange}
-        placeholder="Your email"
-        required
-        className="p-3 rounded-lg border
-        bg-white dark:bg-slate-800
-        text-slate-900 dark:text-white
-        border-slate-300 dark:border-slate-600
-        placeholder-slate-400
-        focus:outline-none focus:ring-2 focus:ring-blue-500
-        transition-colors duration-300"
-      />
-
-      {/* Message */}
-      <textarea
-        name="message"
-        value={form.message}
-        onChange={handleChange}
-        placeholder="Message"
-        rows={6}
-        required
-        className="p-3 rounded-lg border md:col-span-2
-        bg-white dark:bg-slate-800
-        text-slate-900 dark:text-white
-        border-slate-300 dark:border-slate-600
-        placeholder-slate-400
-        focus:outline-none focus:ring-2 focus:ring-blue-500
-        transition-colors duration-300"
-      />
-
-      {/* Button */}
-      <button
-        type="submit"
-        disabled={loading}
-        className="md:col-span-2 py-3 px-6 rounded-lg
-        bg-slate-900 dark:bg-blue-600
-        text-white
-        hover:opacity-90
-        transition"
-      >
-        {loading ? 'Sending...' : 'Send message'}
-      </button>
-
-      {/* Status */}
-      {status && (
-        <div
-          className={`md:col-span-2 mt-2 text-sm ${
-            status.ok
-              ? 'text-green-600 dark:text-green-400'
-              : 'text-red-600 dark:text-red-400'
-          }`}
-        >
-          {status.message}
-        </div>
-      )}
+    <form className="contact-form" method="post" action="/api/contact" onSubmit={handleSubmit} data-reveal>
+      <div className="form-fields">
+        <label>
+          Name
+          <input name="name" placeholder="Your name" autoComplete="name" maxLength={100} required />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" placeholder="you@example.com" autoComplete="email" maxLength={254} required />
+        </label>
+      </div>
+      <label>
+        Message
+        <textarea name="message" placeholder="Tell me what you’d like to discuss" rows={4} maxLength={4000} required />
+      </label>
+      <div className="form-actions">
+        <button type="submit" className="button button-primary" disabled={loading}>
+          <Send size={16} aria-hidden="true" /> {loading ? 'Sending…' : 'Send message'}
+        </button>
+        <p className={'form-status' + (status ? (status.ok ? ' form-success' : ' form-error') : '')} role="status">
+          {status && (
+            <>
+              {status.ok ? <CheckCircle2 size={17} aria-hidden="true" /> : <CircleAlert size={17} aria-hidden="true" />}
+              {status.message}
+            </>
+          )}
+        </p>
+      </div>
     </form>
   )
 }

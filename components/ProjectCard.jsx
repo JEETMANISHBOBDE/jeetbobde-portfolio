@@ -1,75 +1,65 @@
-'use client'
+import {
+  Activity, Database, FileText, Github, GitFork, MessageSquare,
+  Search, Sparkles,
+} from 'lucide-react'
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { Github, ExternalLink } from 'lucide-react'
+function ProjectVisual({ id }) {
+  if (id === 'terry') {
+    return (
+      <div className="project-visual project-visual-terry" aria-hidden="true">
+        <div className="diagram-pipeline">
+          <div className="diagram-node"><FileText size={22} /> <span>PDF</span></div>
+          <div className="diagram-line"><i /></div>
+          <div className="diagram-node diagram-node-active"><Search size={22} /> <span>Retrieve</span></div>
+          <div className="diagram-line"><i /></div>
+          <div className="diagram-node"><MessageSquare size={22} /> <span>Answer</span></div>
+        </div>
+      </div>
+    )
+  }
 
-export default function ProjectCard({ project }) {
+  if (id === 'medimate') {
+    return (
+      <div className="project-visual project-visual-medimate" aria-hidden="true">
+        <div className="diagram-chat">
+          <div className="diagram-message diagram-message-user"><MessageSquare size={15} /> Health question <i /></div>
+          <div className="diagram-message diagram-message-assistant"><Sparkles size={15} /> Answer with context</div>
+          <div className="diagram-source"><Database size={12} /> External knowledge</div>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ type: 'spring', stiffness: 200 }}
-      className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-500"
-    >
-      {/* Image */}
-      <div className="relative h-56 w-full overflow-hidden">
-        <Image
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700"
-        />
+    <div className="project-visual project-visual-classification" aria-hidden="true">
+      <div className="diagram-classifier">
+        <div className="diagram-node"><Activity size={21} /> <span>Features</span></div>
+        <div className="diagram-line"><i /></div>
+        <div className="diagram-node diagram-node-active"><GitFork size={21} /> <span>Model</span></div>
+        <div className="diagram-branch" />
+        <div className="diagram-outcomes"><span>Benign</span><span>Malignant</span></div>
+      </div>
+    </div>
+  )
+}
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center gap-4">
-
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              className="bg-white text-black px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium"
-            >
-              <Github size={16} />
-              GitHub
-            </a>
-          )}
-
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium"
-            >
-              <ExternalLink size={16} />
-              Live
-            </a>
-          )}
-
+export default function ProjectCard({ project, index }) {
+  return (
+    <article className="project-card" data-reveal style={{ '--reveal-delay': index * 75 + 'ms' }}>
+      <ProjectVisual id={project.id} />
+      <div className="project-body">
+        <p className="project-category">{project.category}</p>
+        <h3>{project.title}</h3>
+        <p className="project-description">{project.description}</p>
+        <ul className="tag-list" aria-label="Technologies">
+          {project.stack.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <div className="project-footer">
+          <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-link" aria-label={'View source for ' + project.title + ' on GitHub'}>
+            <Github size={17} aria-hidden="true" /> Source code
+          </a>
         </div>
       </div>
-
-      {/* Content */}
-      <div className="p-6 space-y-4">
-        <h3 className="text-xl font-semibold">
-          {project.title}
-        </h3>
-
-        <p className="text-sm text-slate-300">
-          {project.description}
-        </p>
-
-        {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2">
-          {project.tech.split(',').map((tech, index) => (
-            <span
-              key={index}
-              className="text-xs px-3 py-1 rounded-full bg-white/10 border border-white/10 backdrop-blur-md"
-            >
-              {tech.trim()}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
+    </article>
   )
 }

@@ -1,18 +1,29 @@
-'use client'
+import { Download, Terminal } from 'lucide-react'
 import DarkToggle from './DarkToggle'
 
-
 export default function Header() {
-return (
-<header className="border-b sticky top-0 bg-white dark:bg-slate-900/60 backdrop-blur-sm z-50">
-<div className="container flex items-center justify-between py-4">
-<div className="font-bold">Jeet Manish Bobde</div>
-<nav className="flex items-center gap-4 text-sm text-slate-700 dark:text-slate-300">
-<a href="#projects" className="hover:underline">Projects</a>
-<a href="#contact" className="hover:underline">Contact</a>
-<DarkToggle />
-</nav>
-</div>
-</header>
-)
+  return (
+    <header className="site-header">
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <div className="container header-inner">
+        <a href="#top" className="wordmark">
+          <span className="brand-mark"><Terminal size={17} aria-hidden="true" /></span>
+          Jeet Bobde
+        </a>
+        <nav className="site-nav" aria-label="Main navigation">
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div className="header-actions">
+          <DarkToggle />
+          <a href="/resume.pdf" download="Jeet-Bobde-Resume.pdf" className="button button-outline header-resume">
+            <Download size={15} aria-hidden="true" /> Resume
+          </a>
+        </div>
+      </div>
+      <div className="scroll-progress" aria-hidden="true" />
+    </header>
+  )
 }

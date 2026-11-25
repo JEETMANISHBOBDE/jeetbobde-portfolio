@@ -1,42 +1,35 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Sun, Moon } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 
 export default function DarkToggle() {
   const [theme, setTheme] = useState('dark')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-
-    if (savedTheme === 'light') {
-      document.documentElement.classList.remove('dark')
-      setTheme('light')
-    } else {
-      // Default = dark
-      document.documentElement.classList.add('dark')
-      setTheme('dark')
-    }
+    setTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light')
   }, [])
 
-  const toggleTheme = () => {
-    if (theme === 'dark') {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-      setTheme('light')
-    } else {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-      setTheme('dark')
+  function toggleTheme() {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.classList.toggle('dark', nextTheme === 'dark')
+    setTheme(nextTheme)
+    try {
+      localStorage.setItem('theme', nextTheme)
+    } catch {
+      // The current page can still switch themes when storage is unavailable.
     }
   }
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur-md hover:scale-105 transition"
+      className="icon-button theme-toggle"
+      aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     >
-      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      <Sun size={18} className="theme-icon-sun" aria-hidden="true" />
+      <Moon size={18} className="theme-icon-moon" aria-hidden="true" />
     </button>
   )
 }
